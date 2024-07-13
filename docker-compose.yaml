@@ -1,0 +1,12 @@
+version: '3'
+services:
+  android:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: 'rn-android-ci'
+    restart: always
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: bash -c "yarn && yarn run ci:build:android" # ci:build:android - your custom command to build android

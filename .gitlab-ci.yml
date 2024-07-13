@@ -1,0 +1,27 @@
+stages:
+  - build
+
+cache:
+  untracked: true
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - android/app/build/outputs/
+    - node_modules
+
+before_script:
+  - npx envinfo
+  - npx react-native info
+  - npx yarn install
+
+build:
+  stage: build
+  before_script:
+    - sudo docker compose build
+  script:
+    - sudo docker compose up
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "build"'
+      when: always
+
+  tags:
+    - your_runner_tag # your runner tag. Change it to your runner tag
